@@ -3,6 +3,7 @@
   import TextInput from "../UI/TextInput.svelte";
   import Button from "../UI/Button.svelte";
   import Modal from "../UI/Modal.svelte";
+  import { validator } from "../Helpers/validator";
 
   let title = "";
   let subtitle = "";
@@ -11,6 +12,7 @@
   let email = "";
   let description = "";
   let isFavorite = false;
+  let valid = false;
 
   const dispatch = createEventDispatcher();
 
@@ -29,6 +31,21 @@
   const cancelForm = () => {
     dispatch("cancel");
   };
+
+  $: if (
+    validator(title) ||
+    validator(subtitle) ||
+    validator(address) ||
+    validator(image) ||
+    validator(email) ||
+    validator(description)
+  ) {
+    valid = false;
+    console.log(valid, "valid");
+  } else {
+    valid = true;
+  }
+  $: console.log(valid, "valid1");
 </script>
 
 <Modal title="Create New Event" on:cancel={cancelForm}>
@@ -89,7 +106,11 @@
     </form>
   </div>
   <div slot="footer">
-    <Button type="button" on:click={submitForm}>Submit</Button>
+    <Button
+      type="button"
+      availability={!valid ? true : false}
+      on:click={submitForm}>Submit</Button
+    >
     <Button type="button" on:click={cancelForm}>Cancel</Button>
   </div>
 </Modal>
