@@ -1,5 +1,5 @@
 <script>
-  import validator from "../Helpers/validator.js";
+  import { validator } from "../Helpers/validator.js";
 
   export let label;
   export let row = "";
@@ -8,8 +8,7 @@
   export let id;
   export let value;
 
-  let valid = true;
-  let validityMessage = "";
+  let validityMessage = "Please input valid information.";
   let typed = false;
 </script>
 
@@ -21,16 +20,19 @@
       {value}
       {row}
       {id}
-      class={validator(value) ? "" : "invalid"}
+      class={validator(value) && typed ? "invalid" : ""}
       on:input
+      on:blur={() => (typed = true)}
     />
   {:else}
     <input
       {type}
       {value}
       {id}
-      class={validator(value) ? "" : "invalid"}
+      placeholder={typed ? validityMessage : ""}
+      class={validator(value) && typed ? "invalid" : ""}
       on:input
+      on:blur={() => (typed = true)}
     />
   {/if}
 </div>
