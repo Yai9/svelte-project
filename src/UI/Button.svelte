@@ -2,13 +2,14 @@
   export let type = "button";
   export let mode = "";
   export let href = "";
+  export let availability = null;
 </script>
 
 <div>
   {#if href}
     <a {href}><slot /></a>
   {/if}
-  <button {type} class={mode} on:click><slot /></button>
+  <button {type} disabled={availability} class={mode} on:click><slot /></button>
 </div>
 
 <style>
