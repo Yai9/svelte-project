@@ -1,4 +1,5 @@
 <script>
+  import events from "../Stores/Events/events-store";
   import { createEventDispatcher } from "svelte";
   import TextInput from "../UI/TextInput.svelte";
   import Button from "../UI/Button.svelte";
@@ -14,10 +15,27 @@
   let isFavorite = false;
   let valid = false;
 
+  export let id = null;
+
+  $: if (id) {
+    const unsubscribe = events.subscribe((items) => {
+      const eventItem = items.find((item) => item.id === id);
+
+      title = eventItem.title;
+      subtitle = eventItem.subtitle;
+      address = eventItem.address;
+      image = eventItem.image;
+      email = eventItem.email;
+      description = eventItem.description;
+    });
+    unsubscribe();
+  }
+
   const dispatch = createEventDispatcher();
 
   const submitForm = () => {
-    dispatch("save-form-data", {
+    dispatch("save-form-data");
+    const eventData = {
       title: title,
       subtitle: subtitle,
       address: address,
@@ -25,7 +43,13 @@
       email: email,
       description: description,
       isFavorite: isFavorite,
-    });
+    };
+
+    if (id) {
+      events.updateEvent(id, eventData);
+    } else {
+      events.addEvent(eventData);
+    }
   };
 
   const cancelForm = () => {
@@ -41,11 +65,9 @@
     validator(description)
   ) {
     valid = false;
-    console.log(valid, "valid");
   } else {
     valid = true;
   }
-  $: console.log(valid, "valid1");
 </script>
 
 <Modal title="Create New Event" on:cancel={cancelForm}>

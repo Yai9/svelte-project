@@ -16,6 +16,8 @@
       description={event.description}
       isFavorite={event.isFavorite}
       on:toggle-favorite
+      on:show-details
+      on:edit-event
     />
   {/each}
 </section>
