@@ -29,9 +29,13 @@
   button:focus {
     outline: none;
   }
+  button:active {
+    background: #8400ff;
+    border-color: #8400ff;
+    box-shadow: 1px 1px 8px rgba(77, 51, 51, 0.26);
+  }
 
   button:hover,
-  button:active,
   a:hover,
   a:active {
     background: #c44dff;
@@ -60,14 +64,18 @@
     border-color: #1ac745;
   }
 
-  .outline {
+  .outline,
+  .outline:active,
+  .outline:focus,
+  .outline:hover {
     background: #8400ff;
     color: white;
     box-shadow: none;
   }
 
-  .outline:hover,
-  .outline:active {
+  .outline-active,
+  .outline-active:hover,
+  .outline-active:active {
     background: transparent;
     color: #8400ff;
     box-shadow: none;
