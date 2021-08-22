@@ -13,6 +13,7 @@
   export let UIMode = "overview";
 
   const submitEventsHandler = () => {
+    UIMode = "overview";
     opened = false;
     eventId.id = null;
   };
@@ -30,6 +31,11 @@
   const showDetails = (event) => {
     eventId.id = event.detail;
     UIMode = "detail";
+  };
+
+  const closeDetailCard = () => {
+    UIMode = "overview";
+    eventId.id = null;
   };
 
   const editEvent = (event) => {
@@ -60,6 +66,7 @@
       />
     {:else if UIMode === "detail"}
       <EventDetail eventId={eventId.id} />
+      <Button on:click={closeDetailCard}>Back</Button>
     {/if}
   </div>
 </main>
