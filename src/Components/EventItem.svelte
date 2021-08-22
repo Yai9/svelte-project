@@ -14,6 +14,14 @@
   export let isFavorite;
 
   const dispatch = createEventDispatcher();
+
+  const showDetails = () => {
+    dispatch("show-details", id);
+  };
+
+  const editEvent = () => {
+    dispatch("edit-event", id);
+  };
 </script>
 
 <article>
@@ -39,9 +47,11 @@
     <div class="email">
       <p>{email}</p>
     </div>
-    <Button href="">Contact</Button>
-    <Button>Show Details</Button>
-    <Button mode="outline" on:click={() => dispatch("toggle-favorite", id)}
+    <Button on:click={editEvent}>Edit</Button>
+    <Button on:click={showDetails}>Show Details</Button>
+    <Button
+      mode={!isFavorite ? "outline" : "outline-active"}
+      on:click={() => dispatch("toggle-favorite", id)}
       >{isFavorite ? "Unfavorite" : "Favorite"}
     </Button>
   </footer>
@@ -76,13 +86,6 @@
     font-size: 1.25rem;
     margin: 0.5rem 0;
     font-family: "Roboto Slab", sans-serif;
-  }
-
-  h1.is-favorite {
-    background: #01a129;
-    color: white;
-    padding: 0 0.5rem;
-    border-radius: 5px;
   }
 
   h2 {
