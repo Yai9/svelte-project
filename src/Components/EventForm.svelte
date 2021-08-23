@@ -16,6 +16,7 @@
   let valid = false;
 
   export let id = null;
+  export let editMode = false;
 
   $: if (id) {
     const unsubscribe = events.subscribe((items) => {
@@ -54,6 +55,9 @@
 
   const cancelForm = () => {
     dispatch("cancel");
+  };
+  const removeEvent = () => {
+    dispatch("remove-event");
   };
 
   $: if (
@@ -134,6 +138,9 @@
       on:click={submitForm}>Submit</Button
     >
     <Button type="button" on:click={cancelForm}>Cancel</Button>
+    {#if editMode}
+      <Button on:click={removeEvent}>Remove Event</Button>
+    {/if}
   </div>
 </Modal>
 
