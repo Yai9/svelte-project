@@ -33,5 +33,10 @@ const customEventsStore = {
       return updatedEvents;
     });
   },
+  removeEvent: (id) => {
+    events.update((items) => {
+      return items.filter((i) => i.id !== id);
+    });
+  },
 };
 export default customEventsStore;

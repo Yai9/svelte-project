@@ -11,6 +11,7 @@
   let eventId = {};
 
   export let UIMode = "overview";
+  export let editMode = false;
 
   const submitEventsHandler = () => {
     UIMode = "overview";
@@ -41,9 +42,15 @@
   const editEvent = (event) => {
     opened = true;
     eventId.id = event.detail;
+    editMode = true;
   };
 
-  $: console.log(eventId, "id");
+  const removeEvent = () => {
+    const id = eventId.id;
+    events.removeEvent(id);
+    opened = false;
+    eventId.id = null;
+  };
 </script>
 
 <Header />
@@ -55,7 +62,9 @@
         <EventForm
           on:save-form-data={submitEventsHandler}
           on:cancel={cancelEvent}
+          on:remove-event={removeEvent}
           id={eventId.id}
+          {editMode}
         />
       {/if}
       <EventGrid
