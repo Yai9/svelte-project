@@ -50,6 +50,7 @@
     events.removeEvent(id);
     opened = false;
     eventId.id = null;
+    editMode = false;
   };
 </script>
 

@@ -1,6 +1,8 @@
 <script>
   import EventItem from "./EventItem.svelte";
   import EventFilter from "./EventFilter.svelte";
+  import { scale } from "svelte/transition";
+  import { flip } from "svelte/animate";
 
   export let events;
   export let filterFavorites = false;
@@ -18,20 +20,22 @@
 </section>
 
 <section id="events">
-  {#each filterFavs as event}
-    <EventItem
-      id={event.id}
-      title={event.title}
-      subtitle={event.subtitle}
-      address={event.address}
-      image={event.image}
-      email={event.email}
-      description={event.description}
-      isFavorite={event.isFavorite}
-      on:toggle-favorite
-      on:show-details
-      on:edit-event
-    />
+  {#each filterFavs as event (event.id)}
+    <div transition:scale animate:flip={{ duration: 400 }}>
+      <EventItem
+        id={event.id}
+        title={event.title}
+        subtitle={event.subtitle}
+        address={event.address}
+        image={event.image}
+        email={event.email}
+        description={event.description}
+        isFavorite={event.isFavorite}
+        on:toggle-favorite
+        on:show-details
+        on:edit-event
+      />
+    </div>
   {/each}
 </section>
 
